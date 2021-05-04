@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Login</title>
+</head>
+<body>
+    <form onsubmit="login()">
+    <h3>Login Page</h3>
+    <label for="userName">Enter your Name: </label>
+    <input type="text" id="userName" name="userName"  required placeholder="Your Good name">
+    <br> <br>
+
+    <label for="mobileNumber">Enter your Mobile number:</label>
+    <input type="tel" id="mobileNumber" name="mobileNumber" min=7000000000  required placeholder="Valid phone number">
+    <br><br>
+
+    <label for="passWord">Enter the password:</label>
+    <input type="password" id="passWord" name="passWord"  required placeholder="Strong password">
+    <br><br>
+
+    <p id="loginCheck"></p> <br>
+   
+
+    <button type="submit" > Continue </button>
+    <br><br><br>
+    </form>
+</body>
+
+<script>
+    function login(){
+        event.preventDefault();
+        let userName, mobileNumber, passWord;
+        //Get username, mobile no. & password
+        userName = document.querySelector("#userName").value;
+        mobileNumber = document.querySelector("#mobileNumber").value;
+        passWord = document.querySelector("#passWord").value;
+
+        let uname,mNo ;
+        localStorage.setItem("uname",userName);  //Store locally for further needs
+        localStorage.setItem("mNo",mobileNumber);
+
+        /**
+         * Mobile number should start with '9', '8' & '7'
+         * There must be exactly 10 digits
+         * Password length myst be >= 8 characters
+         */
+        if(mobileNumber.length != 10)   
+            document.getElementById("loginCheck").innerHTML = "Invalid mobile number (should contain 10 digits";
+        else
+        {
+            let mobileCheck = mobileNumber/1000000000;
+            mobileCheck = parseInt(mobileCheck);
+            if(mobileCheck==9 || mobileCheck==8 || mobileCheck==7){
+                if(passWord.length >= 8){
+                    window.location.href = "4_costEstimate.html";
+                    alert("Login Sccessful"); }
+                    
+                else
+                    document.getElementById("loginCheck").innerHTML = "Password should be atleast 8 characters";
+                }
+            else
+                document.getElementById("loginCheck").innerHTML = "Invalid mobile number (should start with '9' '8' or '7'";    
+                    
+               
+
+        }
+
+
+    }
+</script>
+</html>

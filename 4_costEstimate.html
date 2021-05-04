@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Fare estimate</title>
+
+    <!-- Create table to display cab details -->
+    <style>
+        table, th, td {
+            border: 1px solid black;
+            border-collapse: collapse;
+            }
+            th, td {
+              padding: 5px;
+              text-align: left;
+            }
+    </style>
+</head>
+<body>
+    <h2>Cab charges</h2>
+    <br>
+    <center>   
+        <table style="width:100%">
+            <tr>
+                <th>Cab type</th>
+                <th>Price per Km</th>
+                <th>Seating capacity</th>
+          </tr>
+           <tr>
+                 <td>Auto</td>
+                <td>₹7</td>
+                <td>2</td>
+           </tr>
+           <tr>
+                <td>Micro cab</td>
+                <td>₹11</td>
+                <td>4</td>
+           </tr>
+           <tr>
+                <td>Mini cab</td>
+                <td>₹16</td>
+                <td>7</td>
+          </tr>
+          <tr>
+               <td>Jeap</td>
+               <td>₹27</td>
+                <td>9</td>
+           </tr>
+        </table>
+    </center> <br>
+
+<form onsubmit="fareCalculator()">
+    <label>Select Cab type: </label>
+    <select id="cabType">
+        <option disabled>--Select cab Type--</option>
+        <option value="AUTO">Auto</option>
+        <option value="MICRO">Micro cab</option>
+        <option value="MINI">Mini cab</option>
+        <option value="JEEP">Jeep</option>  
+    </select><br><br><br><br><br><br>
+
+    <!-- Distance should be in the range [1 100]Km -->
+    <label> Enter distance </label>
+    <input type="number" id="km" min=1 max=100 placeholder="Enter Km" autocomplete="on" required>
+    <br><br><br>
+    <button >Calculate</button>
+    <p id="invalid"></p>
+    <p id="fare"></p>
+    <p id="gst"></p>
+    <p id="total"></p>
+    <button style="visibility:hidden" id="continue" type="button"  onclick = "journeyDetail()">Continue</button>
+    
+</form>
+
+<script>
+    function fareCalculator(){
+        event.preventDefault();
+        let cabType, km, fare=0;
+        cabType = document.querySelector("#cabType").value;
+        km = document.querySelector("#km").value;
+        km = parseInt(km);
+
+        if(km < 1 && km > 100) {
+           document.getElementById("invalid").innerHTML = "Enter valid distance";
+        }
+        else{
+        localStorage.setItem("cabType", cabType);
+        localStorage.setItem("km",km);
+
+        //Calculate the price based on vehicle selection and km
+        switch(cabType)
+			{
+				case "AUTO":
+				fare = 7 * km;
+				break;
+
+				case "MINI":
+				fare = 11 * km; 
+				break;
+
+				case "MICRO":
+				fare = 16 * km;
+				break;
+                
+				case "JEEP":
+				fare = 27 * km;
+				break;
+			}
+        let gst =(fare * 0.07);
+        gst = parseInt(gst);
+        let totalAmount = gst + fare;
+        
+        //Store locally for further displaying in next html page
+        localStorage.setItem("fare",fare);
+		localStorage.setItem("gst",gst);
+        localStorage.setItem("totalAmount",totalAmount);
+        
+        // Display the computed values back on HTML page
+        document.getElementById("fare").innerHTML = "Estimated Fare : " + fare;
+        document.getElementById("gst").innerHTML = "GST - 7%       : " + gst;
+        document.getElementById("total").innerHTML = "Total Amount   :" + totalAmount;
+       document.getElementById("continue").style.visibility = "visible";
+    }}
+
+
+    function journeyDetail(){
+        event.preventDefault();
+		window.location.href="5_journeyDetails.html";
+    }
+</script>
+</body>
+</html>

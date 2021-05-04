@@ -1,0 +1,75 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body onload="displayJourneyDetails()" style="background-color:rgba(176, 230, 197, 0.527);">
+    <center>
+    <h1>Journey Details</h1>  </center>
+    <h4 id="uname"></h4>
+    <h5 id="mNo"></h5>
+    <p id="cabType" style="color:rgb(255, 0, 212);"> </p>
+    <p id="dist"style="color:rgb(255, 0, 212);"></p>
+    <p id="journeyDate"style="color:rgb(255, 0, 212);"></p>
+    <p id="pickupTime"style="color:rgb(255, 0, 212);"></p>
+    <p id="total"style="color:blue;"></p>
+    <p id="peakHourCharge"style="color:blue;"></p>
+    <p id="seniorDiscountPrice"style="color:blue;"></p>
+    <p id="seniorTotal"style="color:blue;"></p> <br>
+    <form onsubmit = "feedback()">
+
+    <label for="feedback">Enter your Feedback:</label>  <!-- Feedback form-->
+    <input type="text" id="feedback" name="feedback" placeholder="Enter here">   Your valuable feedback will surely help us to upgrade our service.
+    <button type="button">Submit</button>
+    <br><br>
+</form>
+
+<center>
+    <img src="quotes.jpg" alt="Auto" width="270" height="170"  > 
+    <h3>Thank you</h3>
+</center>
+</body>
+
+<script>
+    /**
+     * Displays the journey details obtained form previous HTML pages
+     */
+    function displayJourneyDetails(){
+        let cabType = localStorage.getItem("cabType");  
+        let dist = localStorage.getItem("km");  
+        let journeyDate = localStorage.getItem("journeyDate"); 
+        let pickupTime = localStorage.getItem("pickupTime");
+        let fare = localStorage.getItem("fare");
+        let gst = localStorage.getItem("gst");
+        let total = localStorage.getItem("totalAmount");
+
+        let uname = localStorage.getItem("uname");
+        let mNo = localStorage.getItem("mNo");
+
+        let peakHourCharge = localStorage.getItem("peakHourCharge");
+        let seniorDiscountPrice = localStorage.getItem("seniorDiscountPrice");
+        let seniorTotal = localStorage.getItem("seniorTotal");
+
+        document.getElementById("uname").innerHTML = "Dear " +  uname;
+        document.getElementById("mNo").innerHTML = "Mobile number:  " + mNo;
+        document.getElementById("cabType").innerHTML="Cab type:  " + cabType;
+        document.getElementById("dist").innerHTML="Journey distance:  " + dist;
+        document.getElementById("journeyDate").innerHTML="Journey Date :  " + journeyDate;
+        document.getElementById("pickupTime").innerHTML="Pickup time :  " + pickupTime;
+        document.getElementById("total").innerHTML="Price(including GST) : ₹" + total;
+        document.getElementById("peakHourCharge").innerHTML="Peak hour charges : ₹" + peakHourCharge;
+        document.getElementById("seniorDiscountPrice").innerHTML="Senior citizen discount : ₹" + seniorDiscountPrice;
+        document.getElementById("seniorTotal").innerHTML="Total amount : ₹" + seniorTotal;
+
+        //To store feedback locally 
+        function feedback(){
+            let feedback = document.querySelector("#feedback").value;
+            localStorage.setItem("feedback", feedback);
+        }
+    }
+</script>
+</html>
